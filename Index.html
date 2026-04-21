@@ -1,14 +1,541 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sk Karishma | Portfolio</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Portfolio of Sk Karishma, an aspiring tech professional specializing in Web Development and Data Analysis.">
+    <meta name="keywords" content="Sk Karishma, Portfolio, Full Stack Developer, Data Analyst, Vignan University, ServEase">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #22d3ee;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Background Animation --- */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%);
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(var(--primary), var(--secondary)); 
+            border-radius: 10px;
+        }
+
+        /* --- Global Utility --- */
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #818cf8, #c084fc, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            padding: 1.5rem 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .navbar.scrolled {
+            padding: 1rem 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .navbar-brand { font-size: 1.5rem; letter-spacing: -1px; }
+        .nav-link { 
+            color: var(--text-main) !important; 
+            margin: 0 10px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: var(--accent) !important; }
+
+        /* --- Hero Section --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-title { font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 1rem; line-height: 1.1; }
+        .hero-subtitle { color: var(--text-muted); font-size: 1.25rem; margin-bottom: 2.5rem; max-width: 650px; }
+        .typing-text { color: var(--accent); border-right: 3px solid var(--accent); padding-right: 5px; animation: blink 0.7s infinite; }
+        @keyframes blink { 50% { border-color: transparent; } }
+        .btn-premium {
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+        }
+        .btn-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
+            color: white;
+        }
+
+        /* --- Sections --- */
+        section { padding: 100px 0; }
+        .section-header { margin-bottom: 60px; text-align: center; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 15px; }
+
+        /* --- Skills --- */
+        .skill-card {
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        .skill-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .skill-icon { font-size: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+
+        /* --- Projects --- */
+        .project-card {
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+        }
+        .project-card:hover { transform: scale(1.02); }
+        .project-img {
+            height: 200px;
+            background: linear-gradient(45deg, #1e293b, #334155);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .project-img i { font-size: 4rem; opacity: 0.5; }
+        .project-content { padding: 1.5rem; }
+        .badge-tech {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            margin-right: 5px;
+        }
+
+        /* --- Contact --- */
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-right: 1.5rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 50px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        /* Responsive Mobile Tweak */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3rem; }
+            section { padding: 60px 0; }
+        }
+    </style>
 </head>
 <body>
-    <div id="display"></div>
+    <div class="bg-mesh"></div>
 
-    <script src="index.js"></script>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand gradient-text" href="#">SK. KARISHMA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7" data-aos="fade-right">
+                    <span class="badge rounded-pill mb-3" style="background: rgba(99,102,241,0.1); color: var(--primary); padding: 8px 20px;">Welcome to my Portfolio</span>
+                    <h1 class="hero-title">I'm <span class="gradient-text">Sk Karishma</span><br><span class="typing-text" id="typing"></span></h1>
+                    <p class="hero-subtitle">
+                        Motivated and detail-oriented aspiring tech professional from Guntur. 
+                        I specialize in building practical solutions using <strong>Web Technologies</strong> and <strong>Data Analysis</strong>.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="#projects" class="btn btn-premium">View My Work</a>
+                        <a href="#contact" class="btn btn-outline-light rounded-pill px-4" style="border-width: 2px;">Let's Talk</a>
+                    </div>
+                    <div class="mt-5 d-flex gap-4 fs-3">
+                        <a href="https://github.com/sk-karishma" class="text-white hover-up"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/sk-karishma739" class="text-white hover-up"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:sk.karishma739@gmail.com" class="text-white hover-up"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-light bg-opacity-5">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="glass p-4 text-center">
+                        <!-- Education Card -->
+                        <div class="p-4" style="background: rgba(255,255,255,0.02); border-radius: 20px;">
+                            <i class="fas fa-graduation-cap fs-1 text-primary mb-3"></i>
+                            <h4 class="mb-1">Bachelor of Technology</h4>
+                            <p class="text-muted">2022 - 2026</p>
+                            <p><strong>Vignan University</strong></p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <span class="badge bg-primary">GPA: 3.22/4.0</span>
+                                <span class="badge bg-secondary">Scholarship Winner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="section-header text-start mb-4">
+                        <h2 class="gradient-text">Professional Summary</h2>
+                    </div>
+                    <p class="lead" style="color: var(--text-main);">
+                        Motivated and detail-oriented aspiring tech professional with strong skills in web technologies and problem-solving.
+                    </p>
+                    <p class="text-muted">
+                        Experienced in building basic projects and continuously learning tools like GitHub and modern development platforms. 
+                        Passionate about developing practical solutions and improving technical skills through real-world projects. 
+                        Seeking opportunities to grow in the tech field and contribute to innovative development teams.
+                    </p>
+                    <ul class="list-unstyled mt-4">
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Strong Object-Oriented Programming (OOP) foundation</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Expert in Data Cleaning & Formatting (CSV, Excel)</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Collaborative Team Player</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="gradient-text">Technical Skills</h2>
+                <p class="text-muted">My tech stack and specialized competencies</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3 col-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="glass skill-card">
+                        <i class="fab fa-python skill-icon"></i>
+                        <h5>Python</h5>
+                        <p class="small text-muted">Data Preprocessing & Scripting</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="glass skill-card">
+                        <i class="fab fa-java skill-icon"></i>
+                        <h5>Java</h5>
+                        <p class="small text-muted">Core Programming & OOP</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="glass skill-card">
+                        <i class="fas fa-code skill-icon"></i>
+                        <h5>Web Dev</h5>
+                        <p class="small text-muted">HTML, CSS, JS, Node.js</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="glass skill-card">
+                        <i class="fas fa-database skill-icon"></i>
+                        <h5>Data Tools</h5>
+                        <p class="small text-muted">Excel, CSV, Pandas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="bg-light bg-opacity-5">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="gradient-text">Featured Projects</h2>
+                <p class="text-muted">Combining software engineering and data analysis</p>
+            </div>
+            <div class="row g-4">
+                <!-- Project 1: ServEase -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="glass project-card">
+                        <div class="project-img">
+                            <i class="fas fa-home-user"></i>
+                        </div>
+                        <div class="project-content">
+                            <h4>ServEase - Household Platform</h4>
+                            <p class="text-muted">A full-stack multi-purpose household services platform with user registration and service selection features.</p>
+                            <div class="mb-3">
+                                <span class="badge badge-tech">Node.js</span>
+                                <span class="badge badge-tech">Express</span>
+                                <span class="badge badge-tech">MongoDB</span>
+                                <span class="badge badge-tech">Bootstrap</span>
+                            </div>
+                            <a href="#" class="text-primary text-decoration-none">View System Details <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 2: Employee Data Analysis -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="glass project-card">
+                        <div class="project-img">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="project-content">
+                            <h4>Employee Data Preprocessing</h4>
+                            <p class="text-muted mb-2">Automated data cleaning pipeline using Pandas to handle thousands of records.</p>
+                            <ul class="small text-muted mb-3">
+                                <li>Handled missing values using mean imputation.</li>
+                                <li>Removed duplicates, ensuring data integrity.</li>
+                                <li>Cleaned and formatted CSV/Excel datasets.</li>
+                            </ul>
+                            <div class="mb-3">
+                                <span class="badge badge-tech">Python</span>
+                                <span class="badge badge-tech">Pandas</span>
+                                <span class="badge badge-tech">Jupyter</span>
+                                <span class="badge badge-tech">GitHub</span>
+                            </div>
+                            <a href="https://github.com/sk-karishma/employee-data-cleaning-python" class="text-primary text-decoration-none">Source Code <i class="fab fa-github ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="glass p-5" data-aos="fade-up">
+                        <div class="row g-5">
+                            <div class="col-lg-5">
+                                <h2 class="gradient-text mb-4">Get In Touch</h2>
+                                <p class="text-muted mb-4">I'm currently seeking opportunities to grow and contribute to innovative teams. Feel free to reach out!</p>
+                                
+                                <div class="contact-info-item">
+                                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                                    <div>
+                                        <p class="mb-0 text-muted">Email</p>
+                                        <a href="mailto:sk.karishma739@gmail.com" class="text-decoration-none text-white">sk.karishma739@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div class="contact-info-item">
+                                    <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                                    <div>
+                                        <p class="mb-0 text-muted">Phone</p>
+                                        <a href="tel:+918885888739" class="text-decoration-none text-white">+91 8885888739</a>
+                                    </div>
+                                </div>
+                                <div class="contact-info-item">
+                                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                    <div>
+                                        <p class="mb-0 text-muted">Location</p>
+                                        <span class="text-white">Guntur, Andhra Pradesh</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <form id="contactForm">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control bg-dark border-secondary text-white p-3" placeholder="Your Name" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="email" class="form-control bg-dark border-secondary text-white p-3" placeholder="Your Email" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <textarea class="form-control bg-dark border-secondary text-white p-3" rows="5" placeholder="Your Message" required></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-premium w-100">Send Message</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Sk Karishma. Built with Passion & Caffeine.</p>
+            <div class="d-flex justify-content-center gap-3 mt-3 fs-5">
+                <a href="#" class="text-muted"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-muted"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-muted"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Typing Effect
+        const words = ["Full Stack Developer", "Data Analyst", "Problem Solver"];
+        let count = 0;
+        let index = 0;
+        let currentWord = "";
+        let letter = "";
+
+        (function type() {
+            if (count === words.length) {
+                count = 0;
+            }
+            currentWord = words[count];
+            letter = currentWord.slice(0, ++index);
+
+            const typingElement = document.getElementById('typing');
+            if (typingElement) {
+                typingElement.textContent = letter;
+            }
+            
+            if (letter.length === currentWord.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000);
+            } else {
+                setTimeout(type, 100);
+            }
+        }());
+
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you! Your message has been sent successfully.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                e.target.reset();
+            }, 1500);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
